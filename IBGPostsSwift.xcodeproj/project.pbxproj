@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -63,17 +63,81 @@
 			isa = PBXGroup;
 			children = (
 				05840EAF20DD1E9A00397653 /* AppDelegate.swift */,
-				05840EC520DD317E00397653 /* Post.swift */,
-				05840EC720DD31BC00397653 /* IBGNetworkingManager.swift */,
-				05840EC120DD1F4400397653 /* PostsTableViewController.swift */,
-				05840EC320DD1FD300397653 /* PostTableViewCell.swift */,
-				05840EC920DD341300397653 /* String+Networking.swift */,
-				05840ECB20DD409D00397653 /* UIAlertController+ErrorAlerts.swift */,
+				05AFE07120DD864300D0DCF9 /* Networking */,
+				05AFE07420DD866800D0DCF9 /* UI */,
+				05AFE07720DD868A00D0DCF9 /* Support */,
 				05840EB620DD1E9D00397653 /* Assets.xcassets */,
 				05840EB820DD1E9D00397653 /* LaunchScreen.storyboard */,
 				05840EBB20DD1E9D00397653 /* Info.plist */,
 			);
 			path = IBGPostsSwift;
+			sourceTree = "<group>";
+		};
+		05AFE07120DD864300D0DCF9 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				05AFE07220DD865300D0DCF9 /* Models */,
+				05AFE07320DD865A00D0DCF9 /* Managers */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		05AFE07220DD865300D0DCF9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				05840EC520DD317E00397653 /* Post.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		05AFE07320DD865A00D0DCF9 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				05840EC720DD31BC00397653 /* IBGNetworkingManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		05AFE07420DD866800D0DCF9 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				05AFE07620DD867500D0DCF9 /* View Controllers */,
+				05AFE07520DD867000D0DCF9 /* Views */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		05AFE07520DD867000D0DCF9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				05840EC320DD1FD300397653 /* PostTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		05AFE07620DD867500D0DCF9 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				05840EC120DD1F4400397653 /* PostsTableViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		05AFE07720DD868A00D0DCF9 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				05AFE07820DD869200D0DCF9 /* extensions */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		05AFE07820DD869200D0DCF9 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				05840EC920DD341300397653 /* String+Networking.swift */,
+				05840ECB20DD409D00397653 /* UIAlertController+ErrorAlerts.swift */,
+			);
+			path = extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -108,11 +172,12 @@
 				TargetAttributes = {
 					05840EAB20DD1E9A00397653 = {
 						CreatedOnToolsVersion = 10.0;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
 			buildConfigurationList = 05840EA720DD1E9A00397653 /* Build configuration list for PBXProject "IBGPostsSwift" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -221,7 +286,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -275,11 +340,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -291,10 +355,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MZW32V4M66;
 				INFOPLIST_FILE = IBGPostsSwift/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.instabug.IBGPostsSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -309,10 +371,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MZW32V4M66;
 				INFOPLIST_FILE = IBGPostsSwift/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.instabug.IBGPostsSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
