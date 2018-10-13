@@ -57,7 +57,4 @@ class PostTableViewCell: UITableViewCell {
             bodyLabel.bottomAnchor .constraint(equalTo: contentView.bottomAnchor, constant: -8)
             ])
     }
-    
-    
-    
 }
