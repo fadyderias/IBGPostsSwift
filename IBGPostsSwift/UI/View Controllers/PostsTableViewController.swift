@@ -82,16 +82,17 @@ class PostsTableViewController: UITableViewController {
                 }
                 OperationQueue.main.addOperation({
                     self.updateUIForNetworkCallEnd()
+                    
                 })
                 return
             }
             
             if (self.isRefreshing) {
-                self.postsArray.removeAll()
                 self.isRefreshing = false
             }
             
-            self.postsArray = posts
+            self.postsArray += posts
+            
             OperationQueue.main.addOperation({
                 self.tableView.reloadData()
                 self.updateForNetworkCallEnd()
