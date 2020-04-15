@@ -31,8 +31,8 @@ class IBGNetworkingManager: NSObject {
         do {
             let decoder = JSONDecoder()
             
-            let birdResult = try decoder.decode([Post].self, from: data)
-                DispatchQueue.main.async { completion(birdResult, nil) }
+            let result = try decoder.decode([Post].self, from: data)
+                DispatchQueue.main.async { completion(result, nil) }
             } catch (let error) {
                  DispatchQueue.main.async { completion(nil, error) }
             }
