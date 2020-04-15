@@ -26,7 +26,7 @@ class PostsTableViewController: UITableViewController {
     var pageNumberLabel = UILabel()
     
     lazy var spinner : UIActivityIndicatorView = {
-        var spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        var spinner = UIActivityIndicatorView(style: .gray)
         spinner.frame = CGRect(x: 0, y: 0, width: 320, height: 44)
         return spinner
     }()
