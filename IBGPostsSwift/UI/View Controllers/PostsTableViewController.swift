@@ -75,27 +75,28 @@ class PostsTableViewController: UITableViewController {
     //MARK: - Networking
 
     func loadPosts() {
-        IBGNetworkingManager.sharedInstance.getPostsForPage(pageNumber, success: { (posts) in
+        IBGNetworkingManager.sharedInstance.getPostsForPage(pageNumber, completion:{ (posts, error) in
+            guard let posts = posts, error == nil else {
+                if (self.pageNumber > 1) {
+                    self.pageNumber -= 1;
+                }
+                OperationQueue.main.addOperation({
+                    self.updateUIForNetworkCallEnd()
+                })
+                return
+            }
+            
             if (self.isRefreshing) {
                 self.postsArray.removeAll()
                 self.isRefreshing = false
             }
             
-            self.postsArray.append(contentsOf: posts)
+            self.postsArray = posts
             OperationQueue.main.addOperation({
                 self.tableView.reloadData()
                 self.updateForNetworkCallEnd()
             })
-        }) { (error) in
-            if (self.pageNumber > 1) {
-                self.pageNumber -= 1;
-            }
-            
-            OperationQueue.main.addOperation({
-                self.updateUIForNetworkCallEnd()
-                
-            })
-        }
+        })
     }
     
     //MARK: - Refresh control support
