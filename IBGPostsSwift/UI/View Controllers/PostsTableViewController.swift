@@ -26,7 +26,7 @@ class PostsTableViewController: UITableViewController {
     var pageNumberLabel = UILabel()
     
     lazy var spinner : UIActivityIndicatorView = {
-        var spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        var spinner = UIActivityIndicatorView(style: .gray)
         spinner.frame = CGRect(x: 0, y: 0, width: 320, height: 44)
         return spinner
     }()
@@ -75,27 +75,29 @@ class PostsTableViewController: UITableViewController {
     //MARK: - Networking
 
     func loadPosts() {
-        IBGNetworkingManager.sharedInstance.getPostsForPage(pageNumber, success: { (posts) in
+        IBGNetworkingManager.sharedInstance.getPostsForPage(pageNumber, completion:{ (posts, error) in
+            guard let posts = posts, error == nil else {
+                if (self.pageNumber > 1) {
+                    self.pageNumber -= 1;
+                }
+                OperationQueue.main.addOperation({
+                    self.updateUIForNetworkCallEnd()
+                    
+                })
+                return
+            }
+            
             if (self.isRefreshing) {
-                self.postsArray.removeAll()
                 self.isRefreshing = false
             }
             
-            self.postsArray.append(contentsOf: posts)
+            self.postsArray += posts
+            
             OperationQueue.main.addOperation({
                 self.tableView.reloadData()
                 self.updateForNetworkCallEnd()
             })
-        }) { (error) in
-            if (self.pageNumber > 1) {
-                self.pageNumber -= 1;
-            }
-            
-            OperationQueue.main.addOperation({
-                self.updateUIForNetworkCallEnd()
-                
-            })
-        }
+        })
     }
     
     //MARK: - Refresh control support
@@ -108,7 +110,6 @@ class PostsTableViewController: UITableViewController {
     
     @objc func reloadNewPosts() {
         if (isPullDownToRefreshEnabled) {
-            pageNumber = 1
             isRefreshing = true
             setToActiveState()
             loadPosts()
@@ -144,6 +145,7 @@ class PostsTableViewController: UITableViewController {
     // MARK: - Support
 
     func updateForNetworkCallEnd() {
+        
         if (state == .active) {
             updateLabelsText()
             pageNumber += 1

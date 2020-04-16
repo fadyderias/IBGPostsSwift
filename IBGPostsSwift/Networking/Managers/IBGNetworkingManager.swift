@@ -12,40 +12,32 @@ class IBGNetworkingManager: NSObject {
     
     static let sharedInstance = IBGNetworkingManager()
     
-    func getPostsForPage(_ page: Int, success: @escaping (_ postsArray: [Post]) -> Void, failure: @escaping (_ returnError: Error) -> Void) {
-        var postsArray = [Post]()
+    func getPostsForPage(_ page: Int, completion: @escaping ([Post]?, Error?) -> ()) {
         let urlString = "http://jsonplaceholder.typicode.com/posts"
         
-        if let url = urlString.urlForObjectsWithPage(page: page, limit: 10) {
-            let configuration = URLSessionConfiguration.default
-            configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
-            let ibgSession = URLSession(configuration: configuration)
+        guard let url = urlString.urlForObjectsWithPage(page: page, limit: 10) else {
+            print("invalid url: \(urlString)")
+            return
+        }
             
-            let task = ibgSession.dataTask(with: url) { (data, response, error) in
-                
-                if let error = error {
-                    failure(error)
-                } else {
-                    guard let retrievedData = data else {
-                        return
-                    }
-                    
-                    do {
-                        if let jsonArray = try JSONSerialization.jsonObject(with: retrievedData) as? [[String : Any]] {
-                            for postDictionary in jsonArray {
-                                let post = Post()
-                                post.title = postDictionary["title"] as? String
-                                post.body = postDictionary["body"] as? String
-                                postsArray.append(post)
-                            }
-                            
-                            success(postsArray)
-                        }
-                    } catch { print("Error parsing objects !") }
-                }
+        let request = URLRequest(url: url)
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                        
+        guard let data = data, let _ = response as? HTTPURLResponse, error == nil else {
+            DispatchQueue.main.async { completion(nil, error) }
+                    return
+        }
+                                            
+        do {
+            let decoder = JSONDecoder()
+            
+            let result = try decoder.decode([Post].self, from: data)
+                DispatchQueue.main.async { completion(result, nil) }
+            } catch (let error) {
+                 DispatchQueue.main.async { completion(nil, error) }
             }
             
-            task.resume()
         }
+        task.resume()
     }
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Post: NSObject {
+class Post: Codable {
     
     var title: String?
     var body: String?
