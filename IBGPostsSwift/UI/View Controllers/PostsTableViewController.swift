@@ -110,7 +110,6 @@ class PostsTableViewController: UITableViewController {
     
     @objc func reloadNewPosts() {
         if (isPullDownToRefreshEnabled) {
-            pageNumber = 1
             isRefreshing = true
             setToActiveState()
             loadPosts()
@@ -146,6 +145,7 @@ class PostsTableViewController: UITableViewController {
     // MARK: - Support
 
     func updateForNetworkCallEnd() {
+        
         if (state == .active) {
             updateLabelsText()
             pageNumber += 1
